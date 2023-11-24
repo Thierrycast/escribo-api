@@ -15,6 +15,19 @@ async function create (data: CreateUserDTO): Promise<User> {
   return user
 }
 
+async function getAllData (id: string): Promise<User | null> {
+  const user = await prisma.user.findUnique({
+    include: {
+      telefones: true
+    },
+    where: {
+      id
+    }
+  })
+
+  return user
+}
+
 async function getByEmail (email: string): Promise<User | null> {
   const user = await prisma.user.findFirst({
     where: { email }
@@ -44,6 +57,7 @@ async function udateLastLogin (id: string): Promise<void> {
 
 export default {
   create,
+  getAllData,
   udateLastLogin,
   getByEmail,
   getById

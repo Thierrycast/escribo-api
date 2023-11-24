@@ -18,6 +18,16 @@ export interface OutputUserDTO {
   token: string
 }
 
+export interface allDataUserDTO {
+  id: string
+  nome: string
+  email: string
+  data_criacao: Date
+  data_atualizacao: Date
+  ultimo_login: Date
+  telefones?: Telefone[]
+}
+
 export interface GetUserDTO {
   id: string
 }

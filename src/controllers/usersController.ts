@@ -9,12 +9,11 @@ const createUser = async (req: Request, res: Response) => {
   return res.status(201).json(response)
 }
 
-const listUsers = async (req: Request, res: Response): Promise<void> => {
+const detailUser = async (req: Request, res: Response) => {
+  const id = req.user.id as string
 
-}
-
-const detailUser = async (req: Request, res: Response): Promise<void> => {
-
+  const response = await userServices.detailUser(id)
+  return res.status(200).json(response)
 }
 
 const updateUser = async (req: Request, res: Response): Promise<void> => {
@@ -27,7 +26,6 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
 
 export default {
   createUser,
-  listUsers,
   detailUser,
   updateUser,
   deleteUser

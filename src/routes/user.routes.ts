@@ -10,9 +10,7 @@ userRoutes.post('/', userController.createUser)
 
 userRoutes.use(authMiddleware)
 
-userRoutes.get('/', (req, res) => {
-  return res.send('estou autorizado hehe')
-})
+userRoutes.get('/', userController.detailUser)
 
 userRoutes.put('/:id')
 userRoutes.delete('/:id')

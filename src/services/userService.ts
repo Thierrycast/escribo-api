@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { type CreateUserDTO, type OutputUserDTO } from '../dtos/user.dto'
+import { type allDataUserDTO, type CreateUserDTO, type OutputUserDTO } from '../dtos/user.dto'
 import { ApiError } from '../helpers/api-error'
 import userModel from '../models/user.model'
 import authService from './authService'
@@ -25,6 +25,19 @@ async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
   }
 }
 
+async function detailUser (id: string): Promise<allDataUserDTO> {
+  const user = await userModel.getAllData(id)
+
+  if (!user) {
+    throw new ApiError('Usuario não encontrado', 404)
+  }
+
+  const { senha, ...formattedData } = user
+
+  return formattedData
+}
+
 export default {
-  create
+  create,
+  detailUser
 }
