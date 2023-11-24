@@ -14,7 +14,8 @@ export interface OutputUserDTO {
   id: string
   data_criacao: Date
   data_atualizacao: Date
-  ultimo_login?: Date | null
+  ultimo_login: Date
+  token: string
 }
 
 export interface GetUserDTO {

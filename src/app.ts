@@ -1,9 +1,12 @@
 import 'express-async-errors'
+import dotenv from 'dotenv'
 import cors from 'cors'
 import express, { type Application } from 'express'
 import { userRoutes } from './routes/user.routes'
 import { authRoutes } from './routes/auth.routes'
 import { errorMiddleware } from './middlewares/errorMiddleware'
+
+dotenv.config()
 
 export const app: Application = express()
 app.use(express.json())

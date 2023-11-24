@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import { type CreateUserDTO, type OutputUserDTO } from '../dtos/user.dto'
 import { ApiError } from '../helpers/api-error'
 import userModel from '../models/user.model'
+import authService from './authService'
 
 async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
   const emailExists = await userModel.verifyEmail(data.email)
@@ -15,7 +16,13 @@ async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
 
   const { nome, email, senha, ...user } = await userModel.create(formattedData)
 
-  return user
+  const token = await authService.createToken(user.id)
+
+  return {
+    ...user,
+    ultimo_login: user.data_criacao,
+    token
+  }
 }
 
 export default {
