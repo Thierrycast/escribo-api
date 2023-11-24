@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import { ApiError } from '../helpers/api-error'
 import userModel from '../models/user.model'
-import jwt from 'jsonwebtoken'
+import jwt, { type VerifyErrors, type Secret } from 'jsonwebtoken'
 
 interface JwtPayload {
   id: string
@@ -14,17 +14,29 @@ export const authMiddleware = async (
 ): Promise<void> => {
   const { authorization } = req.headers
 
-  if (authorization == null) {
+  if (!authorization) {
     throw new ApiError('Não autorizado', 401)
   }
 
   const token = authorization.split(' ')[1]
 
+  const jwtSecret = process.env.JWT_SECRET
+
+  if (!jwtSecret) {
+    throw new Error('Segredo JWT não configurado')
+  }
+
+  jwt.verify(token, jwtSecret as Secret, (error: VerifyErrors | null) => {
+    if (error) {
+      handleTokenError(error)
+    }
+  })
+
   const { id } = jwt.verify(token, process.env.JWT_SECRET ?? '') as JwtPayload
 
   const user = await userModel.getById(id)
 
-  if (user == null) {
+  if (!user) {
     throw new ApiError('Não autorizado', 401)
   }
 
@@ -33,4 +45,14 @@ export const authMiddleware = async (
   req.user = loggedUser
 
   next()
+}
+
+const handleTokenError = (error: VerifyErrors): void => {
+  if (error.name === 'TokenExpiredError') {
+    throw new ApiError('Sessão inválida', 401)
+  } else if (error.name === 'JsonWebTokenError') {
+    throw new ApiError('Não autorizado', 401)
+  } else {
+    throw new ApiError('Erro na autenticação', 401)
+  }
 }
