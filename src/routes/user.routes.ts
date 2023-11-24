@@ -5,6 +5,8 @@ export const userRoutes = Router()
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 userRoutes.post('/', userController.createUser)
-userRoutes.get('')
+
+userRoutes.get('/')
+
 userRoutes.put('/:id')
 userRoutes.delete('/:id')

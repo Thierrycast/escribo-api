@@ -12,7 +12,6 @@ async function create (data: CreateUserDTO): Promise<User> {
     }
   })
 
-  console.log(user)
   return user
 }
 
@@ -21,7 +20,6 @@ async function verifyEmail (email: string): Promise<User | null> {
     where: { email }
   })
 
-  console.log(user)
   return user
 }
 
