@@ -2,13 +2,19 @@ import { type User, prisma } from '../database/prisma'
 import { type CreateUserDTO } from '../dtos/user.dto'
 
 async function create (data: CreateUserDTO): Promise<User> {
-  const { nome, email, senha } = data
+  const { nome, email, senha, telefones } = data
 
   const user = await prisma.user.create({
     data: {
       nome,
       email,
-      senha
+      senha,
+      telefones: {
+        create: telefones.map((telefone) => ({
+          numero: telefone.numero,
+          ddd: telefone.ddd
+        }))
+      }
     }
   })
 
