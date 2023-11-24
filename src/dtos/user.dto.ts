@@ -18,7 +18,7 @@ export interface OutputUserDTO {
   token: string
 }
 
-export interface allDataUserDTO {
+export interface AllDataUserDTO {
   id: string
   nome: string
   email: string

@@ -1,4 +1,4 @@
-export interface inputLoginDTO {
+export interface InputLoginDTO {
   email: string
   senha: string
 }

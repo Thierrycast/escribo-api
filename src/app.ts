@@ -1,19 +1,21 @@
 import 'express-async-errors'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import express, { type Application } from 'express'
+import express from 'express'
 import { userRoutes } from './routes/user.routes'
 import { authRoutes } from './routes/auth.routes'
-import { errorMiddleware } from './middlewares/errorMiddleware'
+import { errorMiddleware } from './middlewares/error.middleware'
 
 dotenv.config()
 
-export const app: Application = express()
+const app = express()
+
 app.use(express.json())
 app.use(cors())
 
 app.use('/usuario', userRoutes)
 app.use('/login', authRoutes)
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.use(errorMiddleware)
+
+export default app

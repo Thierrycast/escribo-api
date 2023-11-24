@@ -50,7 +50,7 @@ async function getById (id: string): Promise<User | null> {
   return user
 }
 
-async function udateLastLogin (id: string): Promise<void> {
+async function updateLastLogin (id: string): Promise<void> {
   await prisma.user.update({
     data: {
       ultimo_login: new Date()
@@ -64,7 +64,7 @@ async function udateLastLogin (id: string): Promise<void> {
 export default {
   create,
   getAllData,
-  udateLastLogin,
+  updateLastLogin,
   getByEmail,
   getById
 }

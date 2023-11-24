@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { type Request, type Response } from 'express'
-import userServices from '../services/userService'
+import userServices from '../services/user.service'
 import { type OutputUserDTO, type CreateUserDTO } from '../dtos/user.dto'
 
 const createUser = async (req: Request, res: Response) => {

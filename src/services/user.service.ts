@@ -1,13 +1,15 @@
 import bcrypt from 'bcrypt'
-import { type allDataUserDTO, type CreateUserDTO, type OutputUserDTO } from '../dtos/user.dto'
+import { type AllDataUserDTO, type CreateUserDTO, type OutputUserDTO } from '../dtos/user.dto'
 import { ApiError } from '../helpers/api-error'
 import userModel from '../models/user.model'
-import authService from './authService'
+import authService from './auth.service'
 
 async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
   const emailExists = await userModel.getByEmail(data.email)
 
-  if (emailExists != null) throw new ApiError('E-mail já existente', 409)
+  if (emailExists != null) {
+    throw new ApiError('E-mail já existente', 409)
+  }
 
   const formattedData = {
     ...data,
@@ -25,7 +27,7 @@ async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
   }
 }
 
-async function detailUser (id: string): Promise<allDataUserDTO> {
+async function detailUser (id: string): Promise<AllDataUserDTO> {
   const user = await userModel.getAllData(id)
 
   if (!user) {

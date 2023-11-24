@@ -23,7 +23,7 @@ export const authMiddleware = async (
   const jwtSecret = process.env.JWT_SECRET
 
   if (!jwtSecret) {
-    throw new Error('Segredo JWT não configurado')
+    throw new ApiError('Segredo JWT não configurado', 500)
   }
 
   jwt.verify(token, jwtSecret as Secret, (error: VerifyErrors | null) => {
