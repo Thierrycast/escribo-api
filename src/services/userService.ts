@@ -5,7 +5,7 @@ import userModel from '../models/user.model'
 import authService from './authService'
 
 async function create (data: CreateUserDTO): Promise<OutputUserDTO> {
-  const emailExists = await userModel.verifyEmail(data.email)
+  const emailExists = await userModel.getByEmail(data.email)
 
   if (emailExists != null) throw new ApiError('E-mail já existente', 409)
 

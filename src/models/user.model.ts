@@ -15,7 +15,7 @@ async function create (data: CreateUserDTO): Promise<User> {
   return user
 }
 
-async function verifyEmail (email: string): Promise<User | null> {
+async function getByEmail (email: string): Promise<User | null> {
   const user = await prisma.user.findFirst({
     where: { email }
   })
@@ -23,7 +23,19 @@ async function verifyEmail (email: string): Promise<User | null> {
   return user
 }
 
+async function udateLastLogin (id: string): Promise<void> {
+  await prisma.user.update({
+    data: {
+      ultimo_login: new Date()
+    },
+    where: {
+      id
+    }
+  })
+}
+
 export default {
   create,
-  verifyEmail
+  getByEmail,
+  udateLastLogin
 }

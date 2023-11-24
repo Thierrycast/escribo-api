@@ -18,7 +18,7 @@ model User {
   telefones        Telefone[]
   data_criacao     DateTime   @default(now())
   data_atualizacao DateTime   @updatedAt
-  ultimo_login     DateTime?
+  ultimo_login     DateTime   @default(now())
 }
 
 model Telefone {
