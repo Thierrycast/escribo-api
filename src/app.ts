@@ -1,12 +1,21 @@
 import 'express-async-errors'
+import dotenv from 'dotenv'
 import cors from 'cors'
-import express, { type Application } from 'express'
+import express from 'express'
 import { userRoutes } from './routes/user.routes'
 import { authRoutes } from './routes/auth.routes'
+import { errorMiddleware } from './middlewares/error.middleware'
 
-export const app: Application = express()
+dotenv.config()
+
+const app = express()
+
 app.use(express.json())
 app.use(cors())
 
-app.use('/user', userRoutes)
+app.use('/usuario', userRoutes)
 app.use('/login', authRoutes)
+
+app.use(errorMiddleware)
+
+export default app
